@@ -1,0 +1,24 @@
+#!/bin/sh
+
+exec 2>&1
+set -eu
+
+rc=0
+
+cd $(dirname "$0")
+for pass in check-pass/*; do
+	echo mypy $pass
+	if ! mypy ${pass}; then
+		rc=1
+	fi
+done
+
+for fail in check-fail/*; do
+	echo mypy $fail
+	if mypy ${fail}; then
+		echo "FAIL: expected ${fail} to fail typechecking"
+		rc=1
+	fi
+done
+
+exit $rc

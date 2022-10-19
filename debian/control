@@ -1,0 +1,30 @@
+Source: typeshed
+Section: python
+Priority: optional
+Maintainer: Debian Python Team <team+python@tracker.debian.org>
+Uploaders: Antonio Terceiro <terceiro@debian.org>
+Build-Depends: debhelper-compat (= 13),
+               git,
+               python3,
+               python3-pip,
+               python3-requests,
+               python3-toml
+Standards-Version: 4.6.0.1
+Vcs-Git: https://salsa.debian.org/python-team/packages/typeshed.git
+Vcs-Browser: https://salsa.debian.org/python-team/packages/typeshed
+Homepage: https://github.com/python/typeshed
+Rules-Requires-Root: no
+
+Package: python3-typeshed
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}
+Provides: ${typeshed:Provides}
+Breaks: python3-types-toml, python3-types-typed-ast
+Replaces: python3-types-toml, python3-types-typed-ast
+Description: collection of library stubs for Python, with static types
+ Typeshed contains external type annotations for the Python standard library
+ and Python builtins, as well as third party packages as contributed by people
+ external to those projects.
+ .
+ This data can e.g. be used for static analysis, type checking or type
+ inference.

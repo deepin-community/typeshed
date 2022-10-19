@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+stubs ?= $(shell ls -1 stubs/)
+
+override_dh_auto_install:
+	dh_auto_install
+	python3 debian/install_stubs.py $(stubs)
+	find debian/python3-typeshed/ -name direct_url.json -delete
+	find debian/python3-typeshed/ -name RECORD -exec sed -i -e /direct_url.json/d '{}' ';'
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf debian/build

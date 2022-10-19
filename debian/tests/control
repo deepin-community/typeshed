@@ -1,0 +1,2 @@
+Tests: check
+Depends: mypy, python3-aiofiles, python3-requests, @

@@ -1,0 +1,17 @@
+typeshed (0.0~git20211009.0142ea8-3) unstable; urgency=medium
+
+  * Break/Replace python3-types-toml, python3-types-typed-ast (Closes: #999461)
+
+ -- Antonio Terceiro <terceiro@debian.org>  Thu, 11 Nov 2021 14:29:21 -0300
+
+typeshed (0.0~git20211009.0142ea8-2) unstable; urgency=medium
+
+  * Source only upload to allow for testing migration
+
+ -- Antonio Terceiro <terceiro@debian.org>  Tue, 09 Nov 2021 18:44:44 -0300
+
+typeshed (0.0~git20211009.0142ea8-1) unstable; urgency=medium
+
+  * Initial release (Closes: #996087)
+
+ -- Antonio Terceiro <terceiro@debian.org>  Sun, 10 Oct 2021 19:06:17 -0300
