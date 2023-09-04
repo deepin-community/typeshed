@@ -1,11 +1,12 @@
-from typing import Any, ClassVar, Tuple
+from _typeshed import Incomplete
+from typing import Any, ClassVar
 from typing_extensions import Literal
 
 from docutils import parsers
 from docutils.parsers.rst import states
 
 class Parser(parsers.Parser):
-    config_section_dependencies: ClassVar[Tuple[str, ...]]
+    config_section_dependencies: ClassVar[tuple[str, ...]]
     initial_state: Literal["Body", "RFC2822Body"]
     state_classes: Any
     inliner: Any
@@ -29,6 +30,6 @@ class Directive:
         state: states.RSTState,
         state_machine: states.RSTStateMachine,
     ) -> None: ...
-    def __getattr__(self, name: str) -> Any: ...  # incomplete
+    def __getattr__(self, name: str) -> Incomplete: ...
 
 def convert_directive_function(directive_fn): ...

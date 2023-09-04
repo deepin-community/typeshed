@@ -1,4 +1,5 @@
 import sys
+
 from setuptools import setup
 
 increment = int(sys.argv.pop())
@@ -14,6 +15,6 @@ setup(
     install_requires=[],
     packages=[],
     classifiers=[
-        "Typing :: Typed",
+        "Typing :: Stubs Only",
     ],
 )

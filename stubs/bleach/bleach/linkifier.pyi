@@ -1,9 +1,12 @@
+from _typeshed import Incomplete
 from collections.abc import Container, Iterable, MutableMapping
-from typing import Any, Pattern, Protocol
+from re import Pattern
+from typing import Any, Protocol
+from typing_extensions import TypeAlias
 
 from .html5lib_shim import Filter
 
-_Attrs = MutableMapping[Any, str]
+_Attrs: TypeAlias = MutableMapping[Any, str]
 
 class _Callback(Protocol):
     def __call__(self, attrs: _Attrs, new: bool = ...) -> _Attrs: ...
@@ -21,7 +24,7 @@ def build_email_re(tlds: Iterable[str] = ...) -> Pattern[str]: ...
 
 EMAIL_RE: Pattern[str]
 
-class Linker(object):
+class Linker:
     def __init__(
         self,
         callbacks: Iterable[_Callback] = ...,
@@ -42,4 +45,4 @@ class LinkifyFilter(Filter):
     def __init__(
         self, source, callbacks=..., skip_tags: Container[str] | None = ..., parse_email: bool = ..., url_re=..., email_re=...
     ) -> None: ...
-    def __getattr__(self, item: str) -> Any: ...  # incomplete
+    def __getattr__(self, item: str) -> Incomplete: ...

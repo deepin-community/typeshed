@@ -9,8 +9,7 @@ import shlex
 import shutil
 import subprocess
 import toml
-from scripts.build_wheel import main as build_wheel
-from scripts.metadata import determine_version
+from stub_uploader.build_wheel import main as build_wheel
 
 
 debian = Path(".") / "debian"
@@ -24,7 +23,7 @@ def run(cmd):
 provides = []
 for stub in sys.argv[1:]:
     metadata = toml.load(f"stubs/{stub}/METADATA.toml")
-    version = metadata["version"]
+    version = metadata["version"].replace(".*", "")
     build_dir = f"debian/build/{stub}"
     if os.path.exists(build_dir):
         shutil.rmtree(build_dir)
@@ -35,7 +34,6 @@ for stub in sys.argv[1:]:
             sys.executable,
             "-mpip",
             "install",
-            "--system",
             "--no-deps",
             f"--target={install_root}/usr/lib/python3/dist-packages",
             str(wheel),

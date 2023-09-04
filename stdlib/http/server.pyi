@@ -3,19 +3,19 @@ import io
 import socketserver
 import sys
 from _typeshed import StrPath, SupportsRead, SupportsWrite
-from typing import Any, AnyStr, BinaryIO, ClassVar, Mapping, Sequence, Tuple
+from collections.abc import Mapping, Sequence
+from typing import Any, AnyStr, BinaryIO, ClassVar
+
+__all__ = ["HTTPServer", "ThreadingHTTPServer", "BaseHTTPRequestHandler", "SimpleHTTPRequestHandler", "CGIHTTPRequestHandler"]
 
 class HTTPServer(socketserver.TCPServer):
     server_name: str
     server_port: int
 
-if sys.version_info >= (3, 7):
-    class ThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):
-        daemon_threads: bool  # undocumented
+class ThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer): ...
 
 class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
-    client_address: Tuple[str, int]
-    server: socketserver.BaseServer
+    client_address: tuple[str, int]
     close_connection: bool
     requestline: str
     command: str
@@ -28,12 +28,10 @@ class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
     error_content_type: str
     protocol_version: str
     MessageClass: type
-    responses: Mapping[int, Tuple[str, str]]
+    responses: Mapping[int, tuple[str, str]]
     default_request_version: str  # undocumented
     weekdayname: ClassVar[Sequence[str]]  # undocumented
     monthname: ClassVar[Sequence[str | None]]  # undocumented
-    def __init__(self, request: bytes, client_address: Tuple[str, int], server: socketserver.BaseServer) -> None: ...
-    def handle(self) -> None: ...
     def handle_one_request(self) -> None: ...
     def handle_expect_100(self) -> bool: ...
     def send_error(self, code: int, message: str | None = ..., explain: str | None = ...) -> None: ...
@@ -52,14 +50,27 @@ class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
     def parse_request(self) -> bool: ...  # undocumented
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
-    server_version: str
     extensions_map: dict[str, str]
-    if sys.version_info >= (3, 7):
+    if sys.version_info >= (3, 12):
         def __init__(
-            self, request: bytes, client_address: Tuple[str, int], server: socketserver.BaseServer, directory: str | None = ...
+            self,
+            request: socketserver._RequestType,
+            client_address: socketserver._AddressType,
+            server: socketserver.BaseServer,
+            *,
+            directory: str | None = ...,
+            index_pages: Sequence[str] | None = ...,
         ) -> None: ...
     else:
-        def __init__(self, request: bytes, client_address: Tuple[str, int], server: socketserver.BaseServer) -> None: ...
+        def __init__(
+            self,
+            request: socketserver._RequestType,
+            client_address: socketserver._AddressType,
+            server: socketserver.BaseServer,
+            *,
+            directory: str | None = ...,
+        ) -> None: ...
+
     def do_GET(self) -> None: ...
     def do_HEAD(self) -> None: ...
     def send_head(self) -> io.BytesIO | BinaryIO | None: ...  # undocumented
