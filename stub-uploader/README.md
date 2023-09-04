@@ -1,12 +1,12 @@
 # stub_uploader
 
-[![Build status](https://github.com/typeshed-internal/stub_uploader/workflows/Check%20scripts/badge.svg)](https://github.com/typeshed-internal/stub_uploader/actions?query=workflow%3A%22Check+scripts%22)
-[![Upload status](https://github.com/typeshed-internal/stub_uploader/workflows/Daily%20update%20of%20stubs%20from%20typeshed%20to%20PyPI/badge.svg)](https://github.com/typeshed-internal/stub_uploader/actions?query=workflow%3A%22Daily+update+of+stubs+from+typeshed+to+PyPI%22)
+[![Build status](https://github.com/typeshed-internal/stub_uploader/actions/workflows/check_scripts.yml/badge.svg)](https://github.com/typeshed-internal/stub_uploader/actions/workflows/check_scripts.yml)
+[![Upload status](https://github.com/typeshed-internal/stub_uploader/actions/workflows/update_stubs.yml/badge.svg)](https://github.com/typeshed-internal/stub_uploader/actions/workflows/update_stubs.yml)
 
 This repository contains scripts and GitHub actions to auto-upload
 [typeshed](https://github.com/python/typeshed) stubs to [PyPI](https://pypi.org/).
 The directory layout is self-explanatory:
-* `/scripts` contains the Python scripts used by GitHub actions.
+* `/stub_uploader` contains the Python scripts used by GitHub actions.
 * `/tests` contains some tests for the above scripts.
 * `/data` keeps the state for upload tasks. Currently this is the last
   [typeshed commit](https://github.com/typeshed-internal/stub_uploader/blob/main/data/last_typeshed_commit.sha1)
@@ -55,8 +55,8 @@ specifies version `X.Y`, this will check what is the latest uploaded minor versi
 [This action](https://github.com/typeshed-internal/stub_uploader/actions?query=workflow%3A%22Force+update+of+some+stubs+from+typeshed+to+PyPI%22)
 can be run to manually force upload new version of some packages. When you click on "Run workflow",
 you will need to select the name of distribution to upload. This can be a Python regexp, for example,
-`six` will only upload the `six` package, `"(typing-extensions|mypy-extensions)"` will upload both packages,
-and entering `".*"` will select all packages (quotes are needed since these are passed as arguments in bash).
+`six` will only upload the `six` package, `(typing-extensions|mypy-extensions)` will upload both packages,
+and entering `.*` will select all packages.
 Note that this action also sorts packages in the dependency order, but it doesn't update the typeshed commit. It may update
 [list of uploaded packages](https://github.com/typeshed-internal/stub_uploader/blob/main/data/uploaded_packages.txt)
 if this is the first time the package is uploaded.

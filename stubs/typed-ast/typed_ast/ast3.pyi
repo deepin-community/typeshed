@@ -1,5 +1,9 @@
-import typing
-from typing import Any, Iterator
+from _typeshed import ReadableBuffer
+from collections.abc import Iterator
+from typing import Any
+from typing_extensions import TypeAlias
+
+LATEST_MINOR_VERSION: int
 
 class NodeVisitor:
     def visit(self, node: AST) -> Any: ...
@@ -8,14 +12,16 @@ class NodeVisitor:
 class NodeTransformer(NodeVisitor):
     def generic_visit(self, node: AST) -> None: ...
 
-def parse(source: str | bytes, filename: str | bytes = ..., mode: str = ..., feature_version: int = ...) -> AST: ...
+def parse(
+    source: str | ReadableBuffer, filename: str | ReadableBuffer = ..., mode: str = ..., feature_version: int = ...
+) -> AST: ...
 def copy_location(new_node: AST, old_node: AST) -> AST: ...
 def dump(node: AST, annotate_fields: bool = ..., include_attributes: bool = ...) -> str: ...
 def fix_missing_locations(node: AST) -> AST: ...
 def get_docstring(node: AST, clean: bool = ...) -> str | None: ...
 def increment_lineno(node: AST, n: int = ...) -> AST: ...
 def iter_child_nodes(node: AST) -> Iterator[AST]: ...
-def iter_fields(node: AST) -> Iterator[typing.Tuple[str, Any]]: ...
+def iter_fields(node: AST) -> Iterator[tuple[str, Any]]: ...
 def literal_eval(node_or_string: str | AST) -> Any: ...
 def walk(node: AST) -> Iterator[AST]: ...
 
@@ -23,11 +29,11 @@ PyCF_ONLY_AST: int
 
 # ast classes
 
-identifier = str
+_Identifier: TypeAlias = str
 
 class AST:
-    _attributes: typing.Tuple[str, ...]
-    _fields: typing.Tuple[str, ...]
+    _attributes: tuple[str, ...]
+    _fields: tuple[str, ...]
     def __init__(self, *args: Any, **kwargs: Any) -> None: ...
 
 class mod(AST): ...
@@ -54,7 +60,7 @@ class stmt(AST):
     col_offset: int
 
 class FunctionDef(stmt):
-    name: identifier
+    name: _Identifier
     args: arguments
     body: list[stmt]
     decorator_list: list[expr]
@@ -62,7 +68,7 @@ class FunctionDef(stmt):
     type_comment: str | None
 
 class AsyncFunctionDef(stmt):
-    name: identifier
+    name: _Identifier
     args: arguments
     body: list[stmt]
     decorator_list: list[expr]
@@ -70,7 +76,7 @@ class AsyncFunctionDef(stmt):
     type_comment: str | None
 
 class ClassDef(stmt):
-    name: identifier
+    name: _Identifier
     bases: list[expr]
     keywords: list[keyword]
     body: list[stmt]
@@ -150,15 +156,15 @@ class Import(stmt):
     names: list[alias]
 
 class ImportFrom(stmt):
-    module: identifier | None
+    module: _Identifier | None
     names: list[alias]
     level: int | None
 
 class Global(stmt):
-    names: list[identifier]
+    names: list[_Identifier]
 
 class Nonlocal(stmt):
-    names: list[identifier]
+    names: list[_Identifier]
 
 class Expr(stmt):
     value: expr
@@ -168,7 +174,7 @@ class Break(stmt): ...
 class Continue(stmt): ...
 class slice(AST): ...
 
-_slice = slice  # this lets us type the variable named 'slice' below
+_Slice: TypeAlias = slice  # this lets us type the variable named 'slice' below
 
 class Slice(slice):
     lower: expr | None
@@ -251,7 +257,7 @@ class Call(expr):
     keywords: list[keyword]
 
 class Num(expr):
-    n: float | int | complex
+    n: complex
 
 class Str(expr):
     s: str
@@ -275,12 +281,12 @@ class Ellipsis(expr): ...
 
 class Attribute(expr):
     value: expr
-    attr: identifier
+    attr: _Identifier
     ctx: expr_context
 
 class Subscript(expr):
     value: expr
-    slice: _slice
+    slice: _Slice
     ctx: expr_context
 
 class Starred(expr):
@@ -288,7 +294,7 @@ class Starred(expr):
     ctx: expr_context
 
 class Name(expr):
-    id: identifier
+    id: _Identifier
     ctx: expr_context
 
 class List(expr):
@@ -348,7 +354,7 @@ class comprehension(AST):
 
 class ExceptHandler(AST):
     type: expr | None
-    name: identifier | None
+    name: _Identifier | None
     body: list[stmt]
     lineno: int
     col_offset: int
@@ -357,24 +363,24 @@ class arguments(AST):
     args: list[arg]
     vararg: arg | None
     kwonlyargs: list[arg]
-    kw_defaults: list[expr]
+    kw_defaults: list[expr | None]
     kwarg: arg | None
     defaults: list[expr]
 
 class arg(AST):
-    arg: identifier
+    arg: _Identifier
     annotation: expr | None
     lineno: int
     col_offset: int
     type_comment: str | None
 
 class keyword(AST):
-    arg: identifier | None
+    arg: _Identifier | None
     value: expr
 
 class alias(AST):
-    name: identifier
-    asname: identifier | None
+    name: _Identifier
+    asname: _Identifier | None
 
 class withitem(AST):
     context_expr: expr

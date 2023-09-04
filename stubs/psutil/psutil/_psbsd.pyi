@@ -1,4 +1,5 @@
-from typing import Any, ContextManager, NamedTuple
+from contextlib import AbstractContextManager
+from typing import Any, NamedTuple
 
 from ._common import (
     FREEBSD as FREEBSD,
@@ -25,17 +26,17 @@ HAS_PROC_NUM_FDS: Any
 kinfo_proc_map: Any
 
 class svmem(NamedTuple):
-    total: Any
-    available: Any
-    percent: Any
-    used: Any
-    free: Any
-    active: Any
-    inactive: Any
-    buffers: Any
-    cached: Any
-    shared: Any
-    wired: Any
+    total: int
+    available: int
+    percent: float
+    used: int
+    free: int
+    active: int
+    inactive: int
+    buffers: int
+    cached: int
+    shared: int
+    wired: int
 
 class scputimes(NamedTuple):
     user: Any
@@ -84,12 +85,12 @@ class sdiskio(NamedTuple):
     write_time: Any
     busy_time: Any
 
-def virtual_memory(): ...
+def virtual_memory() -> svmem: ...
 def swap_memory(): ...
 def cpu_times(): ...
 def per_cpu_times(): ...
 def cpu_count_logical(): ...
-def cpu_count_physical(): ...
+def cpu_count_cores() -> int | None: ...
 def cpu_stats(): ...
 def disk_partitions(all: bool = ...): ...
 
@@ -109,7 +110,7 @@ def pids(): ...
 def pid_exists(pid): ...
 def is_zombie(pid): ...
 def wrap_exceptions(fun): ...
-def wrap_exceptions_procfs(inst) -> ContextManager[None]: ...
+def wrap_exceptions_procfs(inst) -> AbstractContextManager[None]: ...
 
 class Process:
     pid: Any
@@ -140,12 +141,14 @@ class Process:
     def status(self): ...
     def io_counters(self): ...
     def cwd(self): ...
+
     class nt_mmap_grouped(NamedTuple):
         path: Any
         rss: Any
         private: Any
         ref_count: Any
         shadow_count: Any
+
     class nt_mmap_ext(NamedTuple):
         addr: Any
         perms: Any

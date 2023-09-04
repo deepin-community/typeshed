@@ -1,3 +1,5 @@
-version = "1.2"
-python2 = true
+version = "1.2.*"
 requires = []
+
+[tool.stubtest]
+ignore_missing_stub = false

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Text, TypeVar, Union
+from typing import Any, TypeVar
 
 from google.protobuf.descriptor_pool import DescriptorPool
 from google.protobuf.message import Message
@@ -13,26 +13,32 @@ def MessageToJson(
     message: Message,
     including_default_value_fields: bool = ...,
     preserving_proto_field_name: bool = ...,
-    indent: int = ...,
+    indent: int | None = ...,
     sort_keys: bool = ...,
     use_integers_for_enums: bool = ...,
-    descriptor_pool: Optional[DescriptorPool] = ...,
-    float_precision: Optional[int] = ...,
+    descriptor_pool: DescriptorPool | None = ...,
+    float_precision: int | None = ...,
+    ensure_ascii: bool = ...,
 ) -> str: ...
 def MessageToDict(
     message: Message,
     including_default_value_fields: bool = ...,
     preserving_proto_field_name: bool = ...,
     use_integers_for_enums: bool = ...,
-    descriptor_pool: Optional[DescriptorPool] = ...,
-    float_precision: Optional[int] = ...,
-) -> Dict[Text, Any]: ...
+    descriptor_pool: DescriptorPool | None = ...,
+    float_precision: int | None = ...,
+) -> dict[str, Any]: ...
 def Parse(
-    text: Union[bytes, Text],
+    text: bytes | str,
     message: _MessageT,
     ignore_unknown_fields: bool = ...,
-    descriptor_pool: Optional[DescriptorPool] = ...,
+    descriptor_pool: DescriptorPool | None = ...,
+    max_recursion_depth: int = ...,
 ) -> _MessageT: ...
 def ParseDict(
-    js_dict: Any, message: _MessageT, ignore_unknown_fields: bool = ..., descriptor_pool: Optional[DescriptorPool] = ...
+    js_dict: Any,
+    message: _MessageT,
+    ignore_unknown_fields: bool = ...,
+    descriptor_pool: DescriptorPool | None = ...,
+    max_recursion_depth: int = ...,
 ) -> _MessageT: ...

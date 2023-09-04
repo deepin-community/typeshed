@@ -1,22 +1,23 @@
 import sys
-from typing import Callable
+from collections.abc import Callable
 from typing_extensions import Literal
 
 STDOUT: Literal[-11]
 STDERR: Literal[-12]
+ENABLE_VIRTUAL_TERMINAL_PROCESSING: int
 
 if sys.platform == "win32":
     from ctypes import LibraryLoader, Structure, WinDLL, wintypes
 
     windll: LibraryLoader[WinDLL]
     COORD = wintypes._COORD
+
     class CONSOLE_SCREEN_BUFFER_INFO(Structure):
         dwSize: COORD
         dwCursorPosition: COORD
         wAttributes: wintypes.WORD
         srWindow: wintypes.SMALL_RECT
         dwMaximumWindowSize: COORD
-        def __str__(self) -> str: ...
     def winapi_test() -> bool: ...
     def GetConsoleScreenBufferInfo(stream_id: int = ...) -> CONSOLE_SCREEN_BUFFER_INFO: ...
     def SetConsoleTextAttribute(stream_id: int, attrs: wintypes.WORD) -> wintypes.BOOL: ...

@@ -1,2 +1,4 @@
-version = "0.1"
-python2 = true
+version = "7.45.*"
+
+[tool.stubtest]
+apt_dependencies = ["libcurl4-openssl-dev"]

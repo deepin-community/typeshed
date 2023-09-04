@@ -1,3 +1,33 @@
+typeshed (0.0~git20221107.4f381af-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version
+  * Standards-Version: 4.6.1 (routine-update)
+  * debian/install_stubs.py: update for latest code
+  * debian/patches/relative_package_list: find the data files more
+    flexibly.
+  * d/control: additional build-deps
+
+ -- Michael R. Crusoe <crusoe@debian.org>  Tue, 08 Nov 2022 15:26:03 +0100
+
+typeshed (0.0~git20220610.ad48606-2) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Apply multi-arch hints. + python3-typeshed: Add :any qualifier for python3 dependency.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 28 Oct 2022 18:54:29 +0100
+
+typeshed (0.0~git20220610.ad48606-1) unstable; urgency=medium
+
+  * New upstream snapshot 0.0~git20220610.ad48606
+  * Remove patch (applied upstream)
+  * debian/install_stubs.py: remove --system option (Closes: #1005472)
+  * debian/install_stubs.py: remove .* from version numbers
+  * Depends: add python3, drop ${python3:Depends}
+  * debian/rules: drop executable bit from files installed
+
+ -- Antonio Terceiro <terceiro@debian.org>  Fri, 10 Jun 2022 19:59:30 -0300
+
 typeshed (0.0~git20211009.0142ea8-3) unstable; urgency=medium
 
   * Break/Replace python3-types-toml, python3-types-typed-ast (Closes: #999461)
